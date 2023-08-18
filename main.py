@@ -11,6 +11,8 @@ pygame.display.set_caption("Pato Block Game")
 screen = pygame.display.set_mode((1261, 663))
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
+screen.fill((255, 255, 255))  # Blanco
+
 clock = pygame.time.Clock()
 running = True
 
