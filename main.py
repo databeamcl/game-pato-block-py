@@ -4,6 +4,7 @@ pygame.init()
 
 icon = pygame.image.load("./resources/icon.png")
 background = pygame.image.load("./resources/fondoarcade.png")
+backblock = pygame.image.load("./resources/back.png")
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Pato Block Game")
 
@@ -22,6 +23,7 @@ while running:
             running = False
     # screen.fill("blue")
     screen.blit(background, (0, 0))
+    screen.blit(backblock, (320, 30))
     pygame.display.flip()
     clock.tick(60) 
 
