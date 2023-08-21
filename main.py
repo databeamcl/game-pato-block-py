@@ -70,6 +70,12 @@ def move_blocks():
     block_cursor += 1
     print(blocks)
 
+def move_blocks_right():
+    pass
+
+def move_blocks_left():
+    pass
+
 menu_main()
 
 while running:
