@@ -11,7 +11,7 @@ class Sonido:
         
     def game_sound(pygame):
         # cargar un mid
-        pygame.mixer.music.load("./resources/playing.mid")
+        pygame.mixer.music.load("./resources/dk-island-swing.mid")
         # cambair el volumen
         pygame.mixer.music.set_volume(0.5)
         # reproducir el mid una vez
