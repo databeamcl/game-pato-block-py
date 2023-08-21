@@ -15,8 +15,14 @@ running = True
 screen = pygame.display.set_mode((1261, 663))
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
+blocks_size = 5
+blocks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+block_start = 0
+block_end = 18
+block_cursor = 0
+
 def menu_main():
-    Sonido.main_sound(pygame)
+    # Sonido.main_sound(pygame)
     pygame.display.set_icon(icon)
     pygame.display.set_caption("PatoBlock Game (c)")
     screen.blit(background, (0, 0))
@@ -27,15 +33,18 @@ def menu_main():
     screen.blit(txtexit, (550, 190))
 
 def menu_game():
-    Sonido.game_sound(pygame)
+    # Sonido.game_sound(pygame)
     screen.blit(backblock, (320, 30))
 
 def update():
-    pass
+    # sleep 1 second
+    move_blocks()
+    pygame.time.delay(500)
 
 def render():
+    draw_blocks()
     pygame.display.flip() # actualiza la pantalla
-    clock.tick(30) # limita a 30 fps
+    # clock.tick(60) # limita a 30 fps
 
 def keyboardcontroller(running):
     for event in pygame.event.get():
@@ -49,6 +58,17 @@ def keyboardcontroller(running):
             elif event.key == pygame.K_ESCAPE:
                 menu_main()
     return running
+
+def draw_blocks():
+    for i in range(0, 19): # 0 - 18
+      if blocks[i] == 1:
+            screen.blit(block, (320 + (i * 32), 600))
+
+def move_blocks():
+    global block_cursor
+    blocks[block_cursor] = 1
+    block_cursor += 1
+    print(blocks)
 
 menu_main()
 
