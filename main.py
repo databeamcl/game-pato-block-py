@@ -25,9 +25,10 @@ blocks_size = 5
 menu = 0
 # set matrix of blocks
 block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
-
 # crear matriz de bloques game con 0
 block_matrix_game = [[0 for x in range(19)] for y in range(18)]
+
+position = 0
 
 # -------------------------------------------- screen stage
 
@@ -52,10 +53,17 @@ def screen_main():
     screen.blit(txtexit, (550, 190))
 
 def move_blocks_matrix():
-    pass
+    global block_matrix_game
+    global position
+    if position < 19:
+        block_matrix_game[0][position] = 1
+        position += 1
+
 
 def screen_game():
     screen.blit(backblock, (318, 54))
+    move_blocks_matrix()
+    draw_blocks_matrix_game() 
 
 
 def draw_blocks_matrix_main():
@@ -76,7 +84,6 @@ def draw_blocks_matrix_game():
 def keyboardcontroller():
     global running
     global menu
-
     # get events of keyboard
     for event in pygame.event.get():
         # when close window
@@ -100,7 +107,9 @@ def render():
     elif menu == 1:
         screen_game()
     # update display
-    pygame.time.delay(100)
+    # pygame.time.delay(10)
+    clock.tick(60)
+    #print(clock.get_fps())
     pygame.display.flip()
 
 # -------------------------------------------- start game
