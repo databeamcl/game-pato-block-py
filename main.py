@@ -17,11 +17,11 @@ screen = pygame.display.set_mode((1261, 663))
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
 blocks_size = 5
-# crear una matriz de 19 x 19 con valor 0  
 
+# crear una matriz de 19 x 19 con valor 0  
 block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
 
-print(block_matrix)
+# print(block_matrix)
 
 
 # block_start = 0
@@ -34,8 +34,8 @@ def menu_main():
     pygame.display.set_caption("PatoBlock Game (c)")
     screen.blit(background, (0, 0))
     font = pygame.font.Font(None, 50)
-    txtstart = font.render("1 - Jugar", True, (255, 255, 0))
-    txtexit = font.render("2 - Salir", True, (255, 0, 255))
+    txtstart = font.render("1 - Start", True, (255, 255, 0))
+    txtexit = font.render("2 - Exit", True, (255, 0, 255))
     screen.blit(txtstart, (550, 150))
     screen.blit(txtexit, (550, 190))
 
@@ -87,7 +87,7 @@ def move_blocks():
     global block_cursor
     blocks[block_cursor] = 1
     block_cursor += 1
-    print(blocks)
+    # print(blocks)
 
 def move_blocks_right():
     pass
