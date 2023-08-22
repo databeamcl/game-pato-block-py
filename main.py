@@ -24,7 +24,10 @@ blocks_size = 5
 # set menu initial
 menu = 0
 # set matrix of blocks
-block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+
+# crear matriz de bloques game con 0
+block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
 # -------------------------------------------- screen stage
 
@@ -37,29 +40,35 @@ def cal_pos_y(y):
     return y
 
 def screen_main():
-    # Sound.main_sound(pygame)
-    global block_matrix
-
+    global block_matrix_main
     screen.blit(background, (0, 0))
     screen.blit(backblock, (318, 54))
-    block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
-    draw_blocks_matrix()
+    block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+    draw_blocks_matrix_main()
     font = pygame.font.Font(None, 50)
     txtstart = font.render("1 - Star Game", True, (255, 255, 0))
     txtexit = font.render("2 - Exit", True, (255, 0, 255))
     screen.blit(txtstart, (550, 150))
     screen.blit(txtexit, (550, 190))
 
-def screen_game():
-    # Sound.game_sound(pygame)
-    screen.blit(backblock, (318, 54))
-    # draw_blocks_matrix()
+def move_blocks_matrix():
+    pass
 
-def draw_blocks_matrix():
-    # block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+def screen_game():
+    screen.blit(backblock, (318, 54))
+
+
+def draw_blocks_matrix_main():
     for x in range(0, 18):
         for y in range(0, 19):
-            if block_matrix[x][y] == 1:
+            if block_matrix_main[x][y] == 1:
+                screen.blit(block, (cal_pos_x(y), cal_pos_y(x)))
+
+
+def draw_blocks_matrix_game():
+    for x in range(0, 18):
+        for y in range(0, 19):
+            if block_matrix_game[x][y] == 1:
                 screen.blit(block, (cal_pos_x(y), cal_pos_y(x)))
 
 # -------------------------------------------- render stage
