@@ -9,12 +9,12 @@ pygame.init()
 icon = pygame.image.load("./resources/icon.png")
 background = pygame.image.load("./resources/fondoarcade.png")
 backblock = pygame.image.load("./resources/back.png")
-block = pygame.image.load("./resources/block.png")
+block = pygame.image.load("./resources/block_red.png")
 
 # -------------------------------------------- set up
 
 pygame.display.set_icon(icon)
-pygame.display.set_caption("PatoBlock Game (c)")
+pygame.display.set_caption("PatoBlock Game")
 clock = pygame.time.Clock()
 running = True
 screen = pygame.display.set_mode((1261, 663))
