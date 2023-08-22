@@ -38,7 +38,12 @@ def cal_pos_y(y):
 
 def screen_main():
     # Sound.main_sound(pygame)
+    global block_matrix
+
     screen.blit(background, (0, 0))
+    screen.blit(backblock, (318, 54))
+    block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+    draw_blocks_matrix()
     font = pygame.font.Font(None, 50)
     txtstart = font.render("1 - Star Game", True, (255, 255, 0))
     txtexit = font.render("2 - Exit", True, (255, 0, 255))
@@ -48,10 +53,10 @@ def screen_main():
 def screen_game():
     # Sound.game_sound(pygame)
     screen.blit(backblock, (318, 54))
-    draw_blocks_matrix()
+    # draw_blocks_matrix()
 
 def draw_blocks_matrix():
-    block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
+    # block_matrix = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
     for x in range(0, 18):
         for y in range(0, 19):
             if block_matrix[x][y] == 1:
