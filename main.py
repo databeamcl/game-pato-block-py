@@ -29,6 +29,7 @@ block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18
 block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
 position = 0
+floor = 0
 
 # -------------------------------------------- screen stage
 
@@ -56,8 +57,11 @@ def move_blocks_matrix():
     global block_matrix_game
     global position
     if position < 19:
-        block_matrix_game[0][position] = 1
+        block_matrix_game[floor][position-1] = 0
+        block_matrix_game[floor][position] = 1
         position += 1
+    else:
+        position = 0
 
 
 def screen_game():
@@ -84,6 +88,7 @@ def draw_blocks_matrix_game():
 def keyboardcontroller():
     global running
     global menu
+    global floor
     # get events of keyboard
     for event in pygame.event.get():
         # when close window
@@ -97,7 +102,8 @@ def keyboardcontroller():
                 menu = 1
             elif event.key == pygame.K_ESCAPE:
                 menu = 0
-
+            elif event.key == pygame.K_RETURN:
+                floor+=1
 def update():
     pass
 
@@ -108,7 +114,7 @@ def render():
         screen_game()
     # update display
     # pygame.time.delay(10)
-    clock.tick(60)
+    clock.tick(30)
     #print(clock.get_fps())
     pygame.display.flip()
 
