@@ -30,6 +30,7 @@ block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
 position = 0
 floor = 0
+velocity = 10
 
 # -------------------------------------------- screen stage
 
@@ -57,21 +58,26 @@ def move_blocks_matrix():
     global block_matrix_game
     global position
     global blocks_size
+    global velocity
 
-    if position < (19+5):
-        # print("position: ", position, "blocks_size: ",blocks_size)
-        if position < 19:
-            block_matrix_game[floor][position] = 1
-        if blocks_size == 0:
-            block_matrix_game[floor][position-5] = 0
-        if blocks_size > 0:
-            blocks_size -= 1        
-        position += 1
+    if velocity < 0:
+        if position < (19+5):
+            # print("position: ", position, "blocks_size: ",blocks_size)
+            if position < 19:
+                block_matrix_game[floor][position] = 1
+            if blocks_size == 0:
+                block_matrix_game[floor][position-5] = 0
+            if blocks_size > 0:
+                blocks_size -= 1        
+            position += 1
+        else:
+            position = 0
+            blocks_size = 5
+
+        velocity = 10
     else:
-        position = 0
-        blocks_size = 5
-    
-
+        velocity -= 1
+        
 
 def screen_game():
     screen.blit(backblock, (318, 54))
