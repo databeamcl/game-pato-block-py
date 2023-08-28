@@ -30,7 +30,7 @@ block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
 position = 0
 floor = 0
-velocity = 10
+velocity = 30
 
 # -------------------------------------------- screen stage
 
@@ -74,7 +74,7 @@ def move_blocks_matrix():
             position = 0
             blocks_size = 5
 
-        velocity = 10
+        velocity = 1
     else:
         velocity -= 1
         
