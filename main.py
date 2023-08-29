@@ -21,6 +21,8 @@ screen = pygame.display.set_mode((1261, 663))
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # set size of blocks
 blocks_size = 5
+blocks_size_init = 5
+blocks_diff = 0
 # set menu initial
 menu = 0
 # set matrix of blocks
@@ -30,6 +32,8 @@ block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
 position = 0
 floor = 0
+velocity = 100
+i = 0
 
 # -------------------------------------------- screen stage
 
@@ -56,13 +60,35 @@ def screen_main():
 def move_blocks_matrix():
     global block_matrix_game
     global position
-    if position < 19:
-        block_matrix_game[floor][position-1] = 0
-        block_matrix_game[floor][position] = 1
-        position += 1
-    else:
-        position = 0
+    global blocks_size
+    global velocity
 
+    if velocity < 0 and floor < 18:
+        if blocks_size > 0:
+            block_matrix_game[floor][position] = 1
+            position += 1
+            blocks_size -= 1
+        elif position < 19:
+            block_matrix_game[floor][position] = 1
+            block_matrix_game[floor][position - blocks_size_init] = 0
+            position += 1
+        elif position < 19 + blocks_size_init:
+            block_matrix_game[floor][position - blocks_size_init] = 0
+            position += 1
+        elif position == 19 + blocks_size_init:
+            position = 0
+            blocks_size = blocks_size_init
+        velocity = 100 - (i * 6)
+    else:
+        velocity -= 10
+        
+def check_blocks():
+    global blocks_size_init
+    if floor > 0:
+        for x in range(0, 18):
+            if block_matrix_game[floor][x] == 1:
+                if block_matrix_game[floor][x] !=  block_matrix_game[floor-1][x]:
+                    blocks_size_init -= 1
 
 def screen_game():
     screen.blit(backblock, (318, 54))
@@ -76,7 +102,6 @@ def draw_blocks_matrix_main():
             if block_matrix_main[x][y] == 1:
                 screen.blit(block, (cal_pos_x(y), cal_pos_y(x)))
 
-
 def draw_blocks_matrix_game():
     for x in range(0, 18):
         for y in range(0, 19):
@@ -88,7 +113,7 @@ def draw_blocks_matrix_game():
 def keyboardcontroller():
     global running
     global menu
-    global floor
+
     # get events of keyboard
     for event in pygame.event.get():
         # when close window
@@ -103,9 +128,20 @@ def keyboardcontroller():
             elif event.key == pygame.K_ESCAPE:
                 menu = 0
             elif event.key == pygame.K_RETURN:
-                floor+=1
+                update()
+                
 def update():
-    pass
+    global floor
+    global position
+    global i
+    
+    check_blocks()
+
+    position = 0
+    floor+=1
+    i += 1
+    # print("i: ", i)
+
 
 def render():
     if menu == 0:
@@ -114,15 +150,16 @@ def render():
         screen_game()
     # update display
     # pygame.time.delay(10)
-    clock.tick(30)
+    clock.tick(60)
     #print(clock.get_fps())
     pygame.display.flip()
+
 
 # -------------------------------------------- start game
 
 while running:
     keyboardcontroller()
-    update()
+    # update()
     render()
 
 # -------------------------------------------- stop game
