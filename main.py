@@ -78,7 +78,7 @@ def move_blocks_matrix():
         elif position == 19 + blocks_size_init:
             position = 0
             blocks_size = blocks_size_init
-        velocity = 100 - (i * 5)
+        velocity = 100 - (i * 6)
     else:
         velocity -= 10
         
@@ -140,7 +140,7 @@ def update():
     position = 0
     floor+=1
     i += 1
-    print("i: ", i)
+    # print("i: ", i)
 
 
 def render():
