@@ -33,6 +33,7 @@ block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 position = 0
 floor = 0
 velocity = 100
+i = 0
 
 # -------------------------------------------- screen stage
 
@@ -62,9 +63,7 @@ def move_blocks_matrix():
     global blocks_size
     global velocity
 
-    if velocity < 0:
-        
-
+    if velocity < 0 and floor < 18:
         if blocks_size > 0:
             block_matrix_game[floor][position] = 1
             position += 1
@@ -79,9 +78,7 @@ def move_blocks_matrix():
         elif position == 19 + blocks_size_init:
             position = 0
             blocks_size = blocks_size_init
-
-
-        velocity = 100
+        velocity = 100 - (i * 5)
     else:
         velocity -= 10
         
@@ -136,11 +133,14 @@ def keyboardcontroller():
 def update():
     global floor
     global position
+    global i
     
     check_blocks()
 
     position = 0
     floor+=1
+    i += 1
+    print("i: ", i)
 
 
 def render():
