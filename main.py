@@ -90,11 +90,16 @@ def check_blocks():
                 if block_matrix_game[floor][x] !=  block_matrix_game[floor-1][x]:
                     blocks_size_init -= 1
 
+
 def screen_game():
     screen.blit(backblock, (318, 54))
     move_blocks_matrix()
     draw_blocks_matrix_game() 
 
+def screen_game_over():
+    font = pygame.font.Font(None, 50)
+    txtgameover = font.render("Game Over", True, (255, 255, 0))
+    screen.blit(txtgameover, (550, 150))
 
 def draw_blocks_matrix_main():
     for x in range(0, 18):
@@ -152,6 +157,8 @@ def render():
     # pygame.time.delay(10)
     clock.tick(60)
     #print(clock.get_fps())
+    if blocks_size_init == 0:
+        screen_game_over()  
     pygame.display.flip()
 
 
