@@ -4,14 +4,18 @@ import random
 
 pygame.init()
 
-# -------------------------------------------- load resources
+# -----------------------------------------------------------------------------------------
+# load resources
+# -----------------------------------------------------------------------------------------
 
 icon = pygame.image.load("./resources/icon.png")
 background = pygame.image.load("./resources/fondoarcade.png")
 backblock = pygame.image.load("./resources/back.png")
 block = pygame.image.load("./resources/block_red.png")
 
-# -------------------------------------------- set up
+# -----------------------------------------------------------------------------------------
+# set up
+# -----------------------------------------------------------------------------------------
 
 pygame.display.set_icon(icon)
 pygame.display.set_caption("PatoBlock Game")
@@ -35,7 +39,9 @@ floor = 0
 velocity = 100
 i = 0
 
-# -------------------------------------------- screen stage
+# -----------------------------------------------------------------------------------------
+# Utils
+# -----------------------------------------------------------------------------------------
 
 def cal_pos_x(x):
     x = 320 + (x * 32)
@@ -45,7 +51,12 @@ def cal_pos_y(y):
     y = 600 - (y * 32)
     return y
 
-def screen_main():
+                
+# -----------------------------------------------------------------------------------------
+# Menu 0
+# -----------------------------------------------------------------------------------------
+
+def scene_main(): # menu 0
     global block_matrix_main
     screen.blit(background, (0, 0))
     screen.blit(backblock, (318, 54))
@@ -55,7 +66,11 @@ def screen_main():
     txtstart = font.render("1 - Star Game", True, (255, 255, 0))
     txtexit = font.render("2 - Exit", True, (255, 0, 255))
     screen.blit(txtstart, (550, 150))
-    screen.blit(txtexit, (550, 190))
+    screen.blit(txtexit, (550, 190))    
+
+# -----------------------------------------------------------------------------------------
+# Menu 1
+# -----------------------------------------------------------------------------------------
 
 def move_blocks_matrix():
     global block_matrix_game
@@ -81,25 +96,26 @@ def move_blocks_matrix():
         velocity = 100 - (i * 6)
     else:
         velocity -= 10
-        
+
+def button_return():
+    global floor
+    global position
+    global i
+    check_blocks()
+    position = 0
+    floor+=1
+    i += 1
+
 def check_blocks():
     global blocks_size_init
+    global menu
     if floor > 0:
         for x in range(0, 18):
             if block_matrix_game[floor][x] == 1:
                 if block_matrix_game[floor][x] !=  block_matrix_game[floor-1][x]:
                     blocks_size_init -= 1
-
-
-def screen_game():
-    screen.blit(backblock, (318, 54))
-    move_blocks_matrix()
-    draw_blocks_matrix_game() 
-
-def screen_game_over():
-    font = pygame.font.Font(None, 100)
-    txtgameover = font.render("Game Over", True, (255, 255, 0))
-    screen.blit(txtgameover, (450, 300))
+    if blocks_size_init == 0:
+        menu = 2
 
 def draw_blocks_matrix_main():
     for x in range(0, 18):
@@ -117,15 +133,27 @@ def clean_blocks_matrix():
     global block_matrix_game
     block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
-# -------------------------------------------- render stage
+def scene_game(): # menu 1
+    screen.blit(backblock, (318, 54))
+    move_blocks_matrix()
+    draw_blocks_matrix_game() 
+
+# -----------------------------------------------------------------------------------------
+# Menu 1
+# -----------------------------------------------------------------------------------------
+
+def scene_game_over(): # menu 2
+    font = pygame.font.Font(None, 100)
+    txtgameover = font.render("Game Over", True, (255, 255, 0))
+    screen.blit(txtgameover, (450, 300))
+
+# -----------------------------------------------------------------------------------------
+# Render
+# -----------------------------------------------------------------------------------------
 
 def keyboardcontroller():
     global running
     global menu
-    global blocks_size_init
-    global floor
-    global position
-    global velocity
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -138,54 +166,25 @@ def keyboardcontroller():
                 running = False
             elif event.key == pygame.K_1:
                 menu = 1
-                blocks_size_init = 5
-                floor = 0
-                position = 0
-                velocity = 100
-                clean_blocks_matrix()
-                screen_main()
             elif event.key == pygame.K_ESCAPE:
                 menu = 0
-                blocks_size_init = 5
-                floor = 0
-                position = 0
-                velocity = 100
-                screen_main()
             elif event.key == pygame.K_RETURN:
-                update()
-                
-def update():
-    global floor
-    global position
-    global i
-    
-    check_blocks()
-
-    position = 0
-    floor+=1
-    i += 1
-    # print("i: ", i)
-
+                button_return()
 
 def render():
     if menu == 0:
-        screen_main()
+        scene_main()
     elif menu == 1:
-        screen_game()
+        scene_game()
+    elif menu == 2:
+        scene_game_over()
     # update display
-    # pygame.time.delay(10)
-    clock.tick(60)
-    #print(clock.get_fps())
-    if blocks_size_init == 0:
-        screen_game_over()  
     pygame.display.flip()
-
 
 # -------------------------------------------- start game
 
 while running:
     keyboardcontroller()
-    # update()
     render()
 
 # -------------------------------------------- stop game
