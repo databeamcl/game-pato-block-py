@@ -113,11 +113,19 @@ def draw_blocks_matrix_game():
             if block_matrix_game[x][y] == 1:
                 screen.blit(block, (cal_pos_x(y), cal_pos_y(x)))
 
+def clean_blocks_matrix():
+    global block_matrix_game
+    block_matrix_game = [[0 for x in range(19)] for y in range(18)]
+
 # -------------------------------------------- render stage
 
 def keyboardcontroller():
     global running
     global menu
+    global blocks_size_init
+    global floor
+    global position
+    global velocity
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -130,8 +138,19 @@ def keyboardcontroller():
                 running = False
             elif event.key == pygame.K_1:
                 menu = 1
+                blocks_size_init = 5
+                floor = 0
+                position = 0
+                velocity = 100
+                clean_blocks_matrix()
+                screen_main()
             elif event.key == pygame.K_ESCAPE:
                 menu = 0
+                blocks_size_init = 5
+                floor = 0
+                position = 0
+                velocity = 100
+                screen_main()
             elif event.key == pygame.K_RETURN:
                 update()
                 
