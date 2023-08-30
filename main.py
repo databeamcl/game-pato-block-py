@@ -97,9 +97,9 @@ def screen_game():
     draw_blocks_matrix_game() 
 
 def screen_game_over():
-    font = pygame.font.Font(None, 50)
+    font = pygame.font.Font(None, 100)
     txtgameover = font.render("Game Over", True, (255, 255, 0))
-    screen.blit(txtgameover, (550, 150))
+    screen.blit(txtgameover, (450, 300))
 
 def draw_blocks_matrix_main():
     for x in range(0, 18):
