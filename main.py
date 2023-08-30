@@ -50,13 +50,28 @@ def cal_pos_x(x):
 def cal_pos_y(y):
     y = 600 - (y * 32)
     return y
-
                 
 # -----------------------------------------------------------------------------------------
 # Menu 0
 # -----------------------------------------------------------------------------------------
 
-def scene_main(): # menu 0
+def scene_main_keyboard():
+    global running
+    global menu
+
+    # get events of keyboard
+    for event in pygame.event.get():
+        # when close window
+        if event.type == pygame.QUIT:
+            running = False
+        # when key is pressed
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_2:
+                running = False
+            elif event.key == pygame.K_1:
+                menu = 1
+
+def draw_scene_main():
     global block_matrix_main
     screen.blit(background, (0, 0))
     screen.blit(backblock, (318, 54))
@@ -67,6 +82,10 @@ def scene_main(): # menu 0
     txtexit = font.render("2 - Exit", True, (255, 0, 255))
     screen.blit(txtstart, (550, 150))
     screen.blit(txtexit, (550, 190))    
+
+def scene_main(): # menu 0
+    draw_scene_main()
+    scene_main_keyboard()
 
 # -----------------------------------------------------------------------------------------
 # Menu 1
@@ -133,25 +152,8 @@ def clean_blocks_matrix():
     global block_matrix_game
     block_matrix_game = [[0 for x in range(19)] for y in range(18)]
 
-def scene_game(): # menu 1
-    screen.blit(backblock, (318, 54))
-    move_blocks_matrix()
-    draw_blocks_matrix_game() 
 
-# -----------------------------------------------------------------------------------------
-# Menu 1
-# -----------------------------------------------------------------------------------------
-
-def scene_game_over(): # menu 2
-    font = pygame.font.Font(None, 100)
-    txtgameover = font.render("Game Over", True, (255, 255, 0))
-    screen.blit(txtgameover, (450, 300))
-
-# -----------------------------------------------------------------------------------------
-# Render
-# -----------------------------------------------------------------------------------------
-
-def keyboardcontroller():
+def scene_game_keyboard():
     global running
     global menu
 
@@ -162,14 +164,63 @@ def keyboardcontroller():
             running = False
         # when key is pressed
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_2:
-                running = False
-            elif event.key == pygame.K_1:
-                menu = 1
-            elif event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 menu = 0
             elif event.key == pygame.K_RETURN:
                 button_return()
+
+
+def scene_game(): # menu 1
+    screen.blit(backblock, (318, 54))
+    move_blocks_matrix()
+    draw_blocks_matrix_game()
+    scene_game_keyboard()
+
+# -----------------------------------------------------------------------------------------
+# Menu 1
+# -----------------------------------------------------------------------------------------
+
+def scene_game_over_keyboard():
+    global running
+    global menu
+    global position
+    global floor
+    global velocity
+    global i
+    global blocks_size
+    global blocks_size_init
+    global blocks_diff
+
+    # get events of keyboard
+    for event in pygame.event.get():
+        # when close window
+        if event.type == pygame.QUIT:
+            running = False
+        # when key is pressed
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                menu = 0
+                position = 0
+                floor = 0
+                velocity = 100
+                i = 0
+                blocks_size = 5
+                blocks_size_init = 5
+                blocks_diff = 0
+                clean_blocks_matrix()
+
+def draw_scene_game_over(): # menu 2
+    font = pygame.font.Font(None, 100)
+    txtgameover = font.render("Game Over", True, (255, 255, 0))
+    screen.blit(txtgameover, (450, 300))
+
+def scene_game_over(): # menu 2
+    draw_scene_game_over()
+    scene_game_over_keyboard()
+
+# -----------------------------------------------------------------------------------------
+# Render
+# -----------------------------------------------------------------------------------------
 
 def render():
     if menu == 0:
@@ -178,13 +229,13 @@ def render():
         scene_game()
     elif menu == 2:
         scene_game_over()
+    clock.tick(60)
     # update display
     pygame.display.flip()
 
 # -------------------------------------------- start game
 
 while running:
-    keyboardcontroller()
     render()
 
 # -------------------------------------------- stop game
