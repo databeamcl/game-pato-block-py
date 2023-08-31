@@ -38,10 +38,11 @@ position = 0
 floor = 0
 velocity = 100
 i = 0
-# time_game = 60
-time_left = 0
-time_check = 0
-# time_game = 46
+game_over = False
+
+time_now = pygame.time.get_ticks()
+time_end = pygame.time.get_ticks()
+
 # -----------------------------------------------------------------------------------------
 # Utils
 # -----------------------------------------------------------------------------------------
@@ -61,6 +62,7 @@ def cal_pos_y(y):
 def scene_main_keyboard():
     global running
     global menu
+    global game_over
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -72,6 +74,9 @@ def scene_main_keyboard():
             if event.key == pygame.K_2:
                 running = False
             elif event.key == pygame.K_1:
+                # if game_over == True:
+                #     clean_blocks_matrix()
+                #     game_over = False
                 menu = 1
 
 def draw_scene_main():
@@ -138,6 +143,7 @@ def check_blocks():
                     blocks_size_init -= 1
     if blocks_size_init == 0:
         menu = 2
+        # game_over = True
 
 
 def draw_blocks_matrix_main():
@@ -172,6 +178,7 @@ def scene_game_keyboard():
                 menu = 0
             elif event.key == pygame.K_RETURN:
                 button_return()
+                
 
 def draw_time_down():
     global menu    
@@ -206,6 +213,7 @@ def scene_game_over_keyboard():
     global blocks_size
     global blocks_size_init
     global blocks_diff
+    
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -224,6 +232,7 @@ def scene_game_over_keyboard():
                 blocks_size_init = 5
                 blocks_diff = 0
                 clean_blocks_matrix()
+    
 
 def draw_scene_game_over(): # menu 2
     font = pygame.font.Font(None, 100)
