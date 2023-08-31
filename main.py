@@ -38,7 +38,10 @@ position = 0
 floor = 0
 velocity = 100
 i = 0
-
+# time_game = 60
+time_left = 0
+time_check = 0
+# time_game = 46
 # -----------------------------------------------------------------------------------------
 # Utils
 # -----------------------------------------------------------------------------------------
@@ -136,6 +139,7 @@ def check_blocks():
     if blocks_size_init == 0:
         menu = 2
 
+
 def draw_blocks_matrix_main():
     for x in range(0, 18):
         for y in range(0, 19):
@@ -169,15 +173,27 @@ def scene_game_keyboard():
             elif event.key == pygame.K_RETURN:
                 button_return()
 
+def draw_time_down():
+    global menu    
+    font = pygame.font.Font(None, 50)
+    time_left = 6 - (pygame.time.get_ticks() // 1000)
+    if time_left < 0:
+        time_left = 0
+    time_game = font.render(str(time_left), True, (0, 255, 0))
+    screen.blit(time_game, (600, 60))
+    if time_left == 0:
+        menu = 2
+
 
 def scene_game(): # menu 1
     screen.blit(backblock, (318, 54))
     move_blocks_matrix()
     draw_blocks_matrix_game()
+    draw_time_down()
     scene_game_keyboard()
 
 # -----------------------------------------------------------------------------------------
-# Menu 1
+# Menu 2
 # -----------------------------------------------------------------------------------------
 
 def scene_game_over_keyboard():
