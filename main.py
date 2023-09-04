@@ -1,6 +1,8 @@
 import pygame
 from util.sound import Sound
 import random
+import datetime
+import time
 
 pygame.init()
 
@@ -41,12 +43,23 @@ i = 0
 game_over = False
 score = 0
 
-# time_now = pygame.time.get_ticks()
-# print(time_now)
-# time_end = pygame.time.get_ticks()
-# print(time_end)
+# # get time now
+# time_1 = datetime.datetime.now()
+# # delay 1 second using datetime
+# time.sleep(5)
+# time_2 = datetime.datetime.now()
+# # print diff time in seconds
+# print((time_2 - time_1).total_seconds())
 
-# time_left = 10
+# time_1 = datetime.datetime.now()
+# # time now add 5 seconds
+# time_3 = time_1 + datetime.timedelta(seconds=5)
+# # print time now add 5 seconds
+# print(time_3)
+
+time_now = datetime.datetime.now()
+time_game_over = datetime.datetime.now()
+
 
 # -----------------------------------------------------------------------------------------
 # Utils
@@ -79,6 +92,8 @@ def scene_main_keyboard():
             if event.key == pygame.K_2:
                 running = False
             elif event.key == pygame.K_1:
+                time_now = datetime.datetime.now()
+                time_game_over = time_now + datetime.timedelta(seconds=20)
                 menu = 1
                 
 
@@ -200,9 +215,20 @@ def scene_game_keyboard():
             elif event.key == pygame.K_RETURN:
                 button_return()
 
+def show_time_down():
+    global time_now
+    global time_game_over
+    global time_left
+
+    time_now_1 = datetime.datetime.now()    
+    time_left = (time_game_over - time_now_1).total_seconds()
+    font = pygame.font.Font(None, 50)
+    txttime = font.render("Time: " + str(int(20 + time_left)), True, (255, 255, 0))
+    screen.blit(txttime, (550, 60))
 
 def scene_game(): # menu 1
     screen.blit(backblock, (318, 54))
+    show_time_down()
     move_blocks_matrix()
     draw_blocks_matrix_game()
     scene_game_keyboard()
