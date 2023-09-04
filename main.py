@@ -41,9 +41,12 @@ i = 0
 game_over = False
 score = 0
 
-time_now = pygame.time.get_ticks()
-time_end = pygame.time.get_ticks()
+# time_now = pygame.time.get_ticks()
+# print(time_now)
+# time_end = pygame.time.get_ticks()
+# print(time_end)
 
+# time_left = 10
 
 # -----------------------------------------------------------------------------------------
 # Utils
@@ -112,7 +115,7 @@ def scene_main(): # menu 0
     check_game_over()
     scene_main_keyboard()
     draw_scene_main()
-    print("menu 0")
+    # print("menu 0")
 
 # -----------------------------------------------------------------------------------------
 # Menu 1 playing game
@@ -162,7 +165,6 @@ def check_blocks():
                     blocks_size_init -= 1
     if blocks_size_init == 0:
         menu = 2
-        # game_over = True
 
 
 def draw_blocks_matrix_main():
@@ -197,57 +199,12 @@ def scene_game_keyboard():
                 menu = 0
             elif event.key == pygame.K_RETURN:
                 button_return()
-                
 
-# def draw_time_down():
-#     global menu    
-#     font = pygame.font.Font(None, 50)
-#     time_left = 6 - (pygame.time.get_ticks() // 1000)
-#     if time_left < 0:
-#         time_left = 0
-#     time_game = font.render(str(time_left), True, (0, 255, 0))
-#     screen.blit(time_game, (600, 60))
-#     if time_left == 0:
-#         menu = 2
-
-# def draw_time_down():
-#     global menu
-#     font = pygame.font.Font(None, 50)
-#     time_left = 6 - (pygame.time.get_ticks() // 1000)
-#     print(time_left)
-#     if time_left > 0:
-#         time_game = font.render(str(time_left), True, (0, 255, 0))
-#         screen.blit(time_game, (600, 60))
-#     if time_left == 0:
-#         menu = 2
-
-# def draw_time_down():
-#     global menu
-#     font = pygame.font.Font(None, 50)
-#     time_left = 6 - (pygame.time.get_ticks() // 1000)
-#     if time_left > 0:
-#         print(time_left)
-#         time_game = font.render(str(time_left), True, (0, 255, 0))
-#         screen.blit(time_game, (600, 60))
-#     if time_left == 0:
-#         menu = 2
-
-def draw_time_down():
-    global menu
-    font = pygame.font.Font(None, 50)
-    time_left = 6 - ((pygame.time.get_ticks() - start_ticks) // 1000)
-    if time_left > 0:
-        print(time_left)
-        time_game = font.render(str(time_left), True, (0, 255, 0))
-        screen.blit(time_game, (600, 60))
-    if time_left == 0:
-        menu = 2
 
 def scene_game(): # menu 1
     screen.blit(backblock, (318, 54))
     move_blocks_matrix()
     draw_blocks_matrix_game()
-    draw_time_down()
     scene_game_keyboard()
     
 
@@ -303,7 +260,6 @@ def render():
 
 while running:
     render()
-
 
 # -------------------------------------------- stop game
 
