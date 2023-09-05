@@ -81,6 +81,8 @@ def scene_main_keyboard():
     global running
     global menu
     global game_over
+    global time_now
+    global time_game_over
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -99,6 +101,8 @@ def scene_main_keyboard():
 
 def draw_scene_main():
     global block_matrix_main
+    global game_over
+
     screen.blit(background, (0, 0))
     screen.blit(backblock, (318, 54))
     block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
@@ -107,7 +111,7 @@ def draw_scene_main():
     txtstart = font.render("1 - Star Game", True, (255, 255, 0))
     txtexit = font.render("2 - Exit", True, (255, 0, 255))
     screen.blit(txtstart, (550, 150))
-    screen.blit(txtexit, (550, 190))    
+    screen.blit(txtexit, (550, 190))
 
 def reset_game():
     global position, floor, velocity, i, blocks_size, blocks_size_init, blocks_diff, game_over, time_left
@@ -130,7 +134,6 @@ def scene_main(): # menu 0
     check_game_over()
     scene_main_keyboard()
     draw_scene_main()
-    # print("menu 0")
 
 # -----------------------------------------------------------------------------------------
 # Menu 1 playing game
@@ -173,12 +176,14 @@ def button_return():
 def check_blocks():
     global blocks_size_init
     global menu
+    global game_over
     if floor > 0:
         for x in range(0, 18):
             if block_matrix_game[floor][x] == 1:
                 if block_matrix_game[floor][x] !=  block_matrix_game[floor-1][x]:
                     blocks_size_init -= 1
     if blocks_size_init == 0:
+        game_over = True
         menu = 2
 
 
@@ -218,20 +223,23 @@ def scene_game_keyboard():
 def show_time_down():
     global time_now
     global time_game_over
-    global time_left
+    global game_over
+    global menu
 
-    time_now_1 = datetime.datetime.now()    
-    time_left = (time_game_over - time_now_1).total_seconds()
+    time_left = (time_game_over - datetime.datetime.now()).total_seconds()
     font = pygame.font.Font(None, 50)
-    txttime = font.render("Time: " + str(int(20 + time_left)), True, (255, 255, 0))
+    txttime = font.render("Time: " + str(int(time_left)), True, (255, 255, 0))
     screen.blit(txttime, (550, 60))
+    if int(time_left) == 0:
+        menu = 2
+        game_over = True
 
 def scene_game(): # menu 1
     screen.blit(backblock, (318, 54))
-    show_time_down()
     move_blocks_matrix()
     draw_blocks_matrix_game()
     scene_game_keyboard()
+    show_time_down()
     
 
 # -----------------------------------------------------------------------------------------
@@ -241,7 +249,6 @@ def scene_game(): # menu 1
 def scene_game_over_keyboard():
     global running
     global menu
-    global game_over
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -251,10 +258,10 @@ def scene_game_over_keyboard():
         # when key is pressed
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                game_over = True
                 menu = 0
 
 def draw_scene_game_over():
+    global game_over
     font = pygame.font.Font(None, 100)
     txtgameover = font.render("Game Over", True, (255, 255, 0))
     screen.blit(txtgameover, (450, 300))
