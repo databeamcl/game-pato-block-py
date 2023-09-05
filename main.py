@@ -81,7 +81,7 @@ def scene_main_keyboard():
                 running = False
             elif event.key == pygame.K_1:
                 time_now = datetime.datetime.now()
-                time_game_over = time_now + datetime.timedelta(seconds=20)
+                time_game_over = time_now + datetime.timedelta(seconds=51)
                 menu = 1
                 
 
