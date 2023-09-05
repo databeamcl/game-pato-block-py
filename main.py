@@ -43,20 +43,6 @@ i = 0
 game_over = False
 score = 0
 
-# # get time now
-# time_1 = datetime.datetime.now()
-# # delay 1 second using datetime
-# time.sleep(5)
-# time_2 = datetime.datetime.now()
-# # print diff time in seconds
-# print((time_2 - time_1).total_seconds())
-
-# time_1 = datetime.datetime.now()
-# # time now add 5 seconds
-# time_3 = time_1 + datetime.timedelta(seconds=5)
-# # print time now add 5 seconds
-# print(time_3)
-
 time_now = datetime.datetime.now()
 time_game_over = datetime.datetime.now()
 
