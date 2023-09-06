@@ -49,7 +49,17 @@ time_now = datetime.datetime.now()
 time_game_over = datetime.datetime.now()
 coins = 0
 
-               
+# load font
+font = pygame.font.Font(None, 50)
+
+# load text
+txtstart = font.render("1 - Play", True, (255, 255, 0))
+txtexit = font.render("2 - Exit", True, (255, 0, 255))
+txtcredits = font.render("3 - Credits: " + str(coins), True, (0, 0, 255))
+txtinsertcoin = font.render("Insert Coin (Press i)", True, (255, 255, 255))
+txtgameover = font.render("Game Over", True, (255, 255, 0))
+txtgoback = font.render("Press Esc to go back", True, (255, 255, 0))
+
 # -----------------------------------------------------------------------------------------
 # Menu 0 - main
 # -----------------------------------------------------------------------------------------
@@ -78,13 +88,7 @@ def draw_scene_main():
 
     screen.blit(background, (0, 0))
     screen.blit(backblock, (318, 54))
-    block_matrix_main = [[random.randint(0, 1) for x in range(19)] for y in range(18)]
     draw_blocks_matrix_main()
-    font = pygame.font.Font(None, 50)
-    txtstart = font.render("1 - Play", True, (255, 255, 0))
-    txtexit = font.render("2 - Exit", True, (255, 0, 255))
-    txtcredits = font.render("3 - Credits: " + str(coins), True, (0, 0, 255))
-    txtinsertcoin = font.render("Insert Coin (Press i)", True, (255, 255, 255))
     screen.blit(txtstart, (550, 150))
     screen.blit(txtexit, (550, 190))
     screen.blit(txtcredits, (550, 230))
@@ -201,7 +205,6 @@ def show_time_down():
     global time_now, time_game_over, game_over, menu, coins
 
     time_left = (time_game_over - datetime.datetime.now()).total_seconds()
-    font = pygame.font.Font(None, 50)
     txttime = font.render("Time: " + str(int(time_left)), True, (255, 255, 0))
     screen.blit(txttime, (550, 60))
     if int(time_left) == 0:
@@ -237,11 +240,7 @@ def scene_game_over_keyboard():
 def draw_scene_game_over():
     global game_over
 
-    font = pygame.font.Font(None, 100)
-    txtgameover = font.render("Game Over", True, (255, 255, 0))
     screen.blit(txtgameover, (450, 300))
-    font = pygame.font.Font(None, 50)
-    txtgoback = font.render("Press Esc to go back", True, (255, 255, 0))
     screen.blit(txtgoback, (450, 400))
 
 
