@@ -49,13 +49,15 @@ time_now = datetime.datetime.now()
 time_game_over = datetime.datetime.now()
 coins = 0
 
+game_init = False
+
                
 # -----------------------------------------------------------------------------------------
 # Menu 0 - main
 # -----------------------------------------------------------------------------------------
 
 def scene_main_keyboard():
-    global running, menu, game_over, time_now, time_game_over, coins
+    global running, menu, game_over, time_now, time_game_over, coins, game_init
 
     # get events of keyboard
     for event in pygame.event.get():
@@ -67,11 +69,10 @@ def scene_main_keyboard():
             if event.key == pygame.K_2:
                 running = False
             elif event.key == pygame.K_1:
-                time_now = datetime.datetime.now()
-                time_game_over = time_now + datetime.timedelta(seconds=51)
                 menu = 1
             elif event.key == pygame.K_i:
-                coins += 1
+                if coins == 0:
+                    coins += 1
 
 def draw_scene_main():
     global block_matrix_main, game_over, coins
@@ -91,7 +92,7 @@ def draw_scene_main():
     screen.blit(txtinsertcoin, (470, 400))
 
 def reset_game():
-    global position, floor, velocity, i, blocks_size, blocks_size_init, blocks_diff, game_over, time_left
+    global position, floor, velocity, i, blocks_size, blocks_size_init, blocks_diff, game_over
 
     position = 0
     floor = 0
@@ -149,7 +150,7 @@ def button_return():
     i += 1
 
 def check_blocks():
-    global blocks_size_init, menu, game_over, coins
+    global blocks_size_init, menu, game_over, coins, game_init
 
     if floor > 0:
         for x in range(0, 18):
@@ -157,6 +158,7 @@ def check_blocks():
                 if block_matrix_game[floor][x] !=  block_matrix_game[floor-1][x]:
                     blocks_size_init -= 1
     if blocks_size_init == 0:
+        game_init = False
         game_over = True
         menu = 2
         coins -= 1
@@ -198,7 +200,7 @@ def scene_game_keyboard():
                 button_return()
 
 def show_time_down():
-    global time_now, time_game_over, game_over, menu, coins
+    global time_now, time_game_over, game_over, menu, coins, game_init
 
     time_left = (time_game_over - datetime.datetime.now()).total_seconds()
     font = pygame.font.Font(None, 50)
@@ -207,10 +209,20 @@ def show_time_down():
     if int(time_left) == 0:
         menu = 2
         game_over = True
+        game_init = False
         coins -= 1
+
+def set_times():
+    global time_now, time_game_over, game_init
+
+    if game_init == False:
+        time_now = datetime.datetime.now()
+        time_game_over = time_now + datetime.timedelta(seconds=51)
+        game_init = True
 
 def scene_game(): # menu 1
     screen.blit(backblock, (318, 54))
+    set_times()
     move_blocks_matrix()
     draw_blocks_matrix_game()
     scene_game_keyboard()
