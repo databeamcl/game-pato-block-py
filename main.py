@@ -374,6 +374,9 @@ def scene_game(): # menu 1
         Sound.game_sound(pygame)
         game_state.current_music = "game"
     
+    # Dibujar primero el fondo principal
+    screen.blit(background, (0, 0))
+    # Luego dibujar el fondo de los bloques
     screen.blit(backblock, (318, 54))
     set_times()
     move_blocks_matrix()
