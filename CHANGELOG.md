@@ -2,7 +2,12 @@
 
 Todas las modificaciones notables a este proyecto serán documentadas en este archivo.
 
-## [1.1.0] - 2025-07-08
+## [1.1.1] - 2025-07-09 [commit:e74b9a2]
+
+### Corregido
+- Añadido el fondo principal durante el juego que no se estaba mostrando correctamente
+
+## [1.1.0] - 2025-07-08 [commit:b48d7f1]
 
 ### Añadido
 - Implementada clase `GameState` para centralizar las variables de estado del juego
@@ -34,7 +39,7 @@ Todas las modificaciones notables a este proyecto serán documentadas en este ar
 - Corrección en la reproducción de sonido para evitar superposiciones
 - Problemas de visualización en pantallas de diferentes resoluciones
 
-## [1.0.0] - Versión Inicial
+## [1.0.0] - 2025-07-01 [commit:a523c9d] - Versión Inicial
 
 - Implementación básica del juego PatoBlock
 - Sistema de bloques que caen y deben ser alineados
