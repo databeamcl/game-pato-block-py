@@ -56,4 +56,4 @@ pyinstaller --onefile --windowed main.py
 
 ## Créditos
 
-Desarrollado por DATABEAMCL
+Desarrollado por [https://github.com/alvarockcl](https://github.com/alvarockcl)
