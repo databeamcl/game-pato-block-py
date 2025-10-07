@@ -2,6 +2,11 @@
 
 Un juego de apilamiento de bloques desarrollado en Python usando Pygame.
 
+## Imagen del juego
+
+![Imagen del juego](image.png)
+
+
 ## Requisitos
 
 - Python 3.10.7 o superior
